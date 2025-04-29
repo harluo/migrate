@@ -2,7 +2,7 @@ package core
 
 import (
 	"github.com/harluo/di"
-	"github.com/pangum/migration/internal/core/internal"
+	"github.com/harluo/migrate/internal/core/internal"
 )
 
 func init() {

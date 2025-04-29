@@ -4,8 +4,8 @@ import (
 	"context"
 
 	"github.com/goexl/log"
-	"github.com/pangum/migration/internal/core/internal/command/internal"
-	"github.com/pangum/migration/internal/kernel"
+	"github.com/harluo/migrate/internal/core/internal/command/internal"
+	"github.com/harluo/migrate/internal/kernel"
 )
 
 type Down struct {

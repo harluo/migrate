@@ -13,4 +13,7 @@ type Migration interface {
 
 	// Down 降级时调用
 	Down(context.Context) error
+
+	// Description 升级描述
+	Description() string
 }

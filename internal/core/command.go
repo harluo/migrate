@@ -5,7 +5,7 @@ import (
 
 	"github.com/goexl/log"
 	"github.com/harluo/boot"
-	"github.com/pangum/migration/internal/core/internal/command"
+	"github.com/harluo/migrate/internal/core/internal/command"
 )
 
 type Command struct {

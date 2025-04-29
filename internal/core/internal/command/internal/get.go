@@ -3,7 +3,7 @@ package internal
 import (
 	"github.com/goexl/log"
 	"github.com/harluo/di"
-	"github.com/pangum/migration/internal/kernel"
+	"github.com/harluo/migrate/internal/kernel"
 )
 
 type Get struct {

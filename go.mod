@@ -1,4 +1,4 @@
-module github.com/pangum/migration
+module github.com/harluo/migrate
 
 go 1.24
 

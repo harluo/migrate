@@ -3,7 +3,7 @@ package core
 import (
 	"context"
 
-	"github.com/pangum/migration/internal/core/internal/command"
+	"github.com/harluo/migrate/internal/core/internal/command"
 )
 
 type Initializer struct {
