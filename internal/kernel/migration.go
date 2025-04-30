@@ -5,8 +5,8 @@ import (
 )
 
 type Migration interface {
-	// Name 升级名称
-	Name() string
+	// Id 标识
+	Id() uint64
 
 	// Up 升级时调用
 	Up(context.Context) error

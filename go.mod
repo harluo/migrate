@@ -3,7 +3,9 @@ module github.com/harluo/migrate
 go 1.24
 
 require (
+	github.com/goexl/db v0.0.1
 	github.com/goexl/log v0.0.9
+	github.com/goexl/model v0.1.4
 	github.com/harluo/boot v1.7.1
 	github.com/harluo/di v0.0.5
 )
