@@ -67,7 +67,7 @@ func (u *Upgrade) Usage() string {
 }
 
 func (u *Upgrade) Description() string {
-	return `升级`
+	return "升级数据"
 }
 
 func (u *Upgrade) exec(ctx context.Context) (err error) {

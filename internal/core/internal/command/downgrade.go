@@ -45,7 +45,7 @@ func (d *Downgrade) Aliases() []string {
 }
 
 func (d *Downgrade) Usage() string {
-	return "降级"
+	return "降级数据"
 }
 
 func (d *Downgrade) Run(ctx context.Context) (err error) {
@@ -59,7 +59,7 @@ func (d *Downgrade) Run(ctx context.Context) (err error) {
 }
 
 func (d *Downgrade) Description() string {
-	return `降级`
+	return "降级"
 }
 
 func (d *Downgrade) exec(ctx context.Context) (err error) {
