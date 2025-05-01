@@ -1,15 +1,18 @@
 package model
 
 import (
-	"github.com/goexl/model"
+	"time"
 )
 
 type Migration struct {
-	model.Base
+	Id uint64 `json:"id,omitempty"`
+	// 版本号
+	Version uint16 `json:"version,omitempty"`
+	// 描述
+	Description string `json:"description,omitempty"`
 
-	Key         string
-	Name        string
-	Description string
+	// 创建时间
+	Created time.Time `json:"created,omitempty"`
 }
 
 func (*Migration) TableComment() string {

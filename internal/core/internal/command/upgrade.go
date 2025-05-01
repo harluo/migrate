@@ -8,37 +8,37 @@ import (
 	"github.com/harluo/migrate/internal/kernel"
 )
 
-type Up struct {
+type Upgrade struct {
 	migrations []kernel.Migration
 	logger     log.Logger
 }
 
-func newUp(get internal.Get) *Up {
-	return &Up{
+func newUpgrade(get internal.Get) *Upgrade {
+	return &Upgrade{
 		migrations: get.Migrations,
 		logger:     get.Logger,
 	}
 }
 
-func (u *Up) Name() string {
-	return "up"
+func (u *Upgrade) Name() string {
+	return "upgrade"
 }
 
-func (u *Up) Aliases() []string {
+func (u *Upgrade) Aliases() []string {
 	return []string{
 		"u",
-		"upgrade",
+		"up",
 	}
 }
 
-func (u *Up) Usage() string {
+func (u *Upgrade) Usage() string {
 	return "升级"
 }
 
-func (u *Up) Run(ctx context.Context) (err error) {
+func (u *Upgrade) Run(ctx context.Context) (err error) {
 	return
 }
 
-func (u *Up) Description() string {
+func (u *Upgrade) Description() string {
 	return `升级`
 }

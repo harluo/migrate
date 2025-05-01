@@ -9,12 +9,12 @@ import (
 )
 
 type Command struct {
-	up     *command.Up
-	down   *command.Down
+	up     *command.Upgrade
+	down   *command.Downgrade
 	logger log.Logger
 }
 
-func newCommand(up *command.Up, down *command.Down, logger log.Logger) *Command {
+func newCommand(up *command.Upgrade, down *command.Downgrade, logger log.Logger) *Command {
 	return &Command{
 		up:     up,
 		down:   down,

@@ -8,37 +8,37 @@ import (
 	"github.com/harluo/migrate/internal/kernel"
 )
 
-type Down struct {
+type Downgrade struct {
 	migrations []kernel.Migration
 	logger     log.Logger
 }
 
-func newDown(get internal.Get) *Down {
-	return &Down{
+func newDown(get internal.Get) *Downgrade {
+	return &Downgrade{
 		migrations: get.Migrations,
 		logger:     get.Logger,
 	}
 }
 
-func (d *Down) Name() string {
-	return "down"
+func (d *Downgrade) Name() string {
+	return "downgrade"
 }
 
-func (d *Down) Aliases() []string {
+func (d *Downgrade) Aliases() []string {
 	return []string{
 		"d",
-		"downgrade",
+		"down",
 	}
 }
 
-func (d *Down) Usage() string {
+func (d *Downgrade) Usage() string {
 	return "降级"
 }
 
-func (d *Down) Run(ctx context.Context) (err error) {
+func (d *Downgrade) Run(ctx context.Context) (err error) {
 	return
 }
 
-func (d *Down) Description() string {
+func (d *Downgrade) Description() string {
 	return `降级`
 }

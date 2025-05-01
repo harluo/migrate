@@ -8,11 +8,11 @@ import (
 )
 
 type Initializer struct {
-	up    *command.Up
+	up    *command.Upgrade
 	table *db.Table
 }
 
-func newInitializer(up *command.Up) *Initializer {
+func newInitializer(up *command.Upgrade) *Initializer {
 	return &Initializer{
 		up: up,
 	}

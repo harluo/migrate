@@ -7,6 +7,7 @@ import (
 func init() {
 	di.New().Instance().Put(
 		newTable,
-		newMigration,
+		newUpgrade,
+		newDowngrade,
 	).Build().Apply()
 }

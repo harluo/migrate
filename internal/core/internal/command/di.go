@@ -6,7 +6,7 @@ import (
 
 func init() {
 	di.New().Instance().Put(
-		newUp,
+		newUpgrade,
 		newDown,
 	).Build().Apply()
 }
