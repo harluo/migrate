@@ -6,33 +6,24 @@ import (
 	"github.com/goexl/log"
 	"github.com/harluo/boot"
 	"github.com/harluo/migrate/internal/core/internal/command"
-	"github.com/harluo/migrate/internal/internal/db"
 )
 
 type Command struct {
 	upgrade   *command.Upgrade
 	downgrade *command.Downgrade
-	table     *db.Table
 	logger    log.Logger
 }
 
-func newCommand(upgrade *command.Upgrade, downgrade *command.Downgrade, table *db.Table, logger log.Logger) *Command {
+func newCommand(upgrade *command.Upgrade, downgrade *command.Downgrade, logger log.Logger) *Command {
 	return &Command{
 		upgrade:   upgrade,
 		downgrade: downgrade,
-		table:     table,
 		logger:    logger,
 	}
 }
 
-func (c *Command) Run(ctx context.Context) (err error) {
-	if ce := c.table.Create(ctx); nil != ce {
-		err = ce
-	} else {
-		err = c.upgrade.Run(ctx) // 默认执行升级命令
-	}
-
-	return
+func (c *Command) Run(ctx context.Context) error {
+	return c.upgrade.Run(ctx) // 默认执行升级命令
 }
 
 func (*Command) Name() string {
