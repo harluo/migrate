@@ -79,7 +79,7 @@ func (u *Upgrade) insert(ctx context.Context, tx *sql.Tx, migration *model.Migra
 
 func (u *Upgrade) insertSQL() (sql string, err error) {
 	switch u.dt {
-	case db.TypeMysql:
+	case db.TypeMySQL:
 		sql = fmt.Sprintf(`INSERT INTO %s (id, version, description) VALUES (?, ?, ?)`, u.config.Table)
 	case db.TypePostgres:
 		sql = fmt.Sprintf(`INSERT INTO %s (id, version, description) VALUES ($1, $2, $3)`, u.config.Table)

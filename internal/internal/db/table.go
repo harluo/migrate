@@ -57,7 +57,7 @@ func (t *Table) exists() (exists bool, err error) {
 
 func (t *Table) createSQL() (sql string, err error) {
 	switch t.dt {
-	case db.TypeMysql:
+	case db.TypeMySQL:
 		sql = `SELECT COUNT(*) FROM "information_schema"."TABLES" WHERE "TABLE_NAME" = ?`
 	case db.TypePostgres:
 		sql = `SELECT EXISTS(SELECT FROM "pg_tables" WHERE "schemaname" = 'public' AND "tablename" = $1)`
@@ -74,7 +74,7 @@ func (t *Table) createSQL() (sql string, err error) {
 
 func (t *Table) dialect() (smallint, bigint, datetime, varchar string, err error) {
 	switch t.dt {
-	case db.TypeMysql:
+	case db.TypeMySQL:
 		smallint = "SMALLINT"
 		bigint = "BIGINT"
 		datetime = "DATETIME"

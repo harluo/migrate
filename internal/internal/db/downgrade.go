@@ -68,7 +68,7 @@ func (u *Downgrade) delete(ctx context.Context, tx *sql.Tx, migration *model.Mig
 
 func (u *Downgrade) deleteSQL() (sql string, err error) {
 	switch u.dt {
-	case db.TypeMysql:
+	case db.TypeMySQL:
 		sql = fmt.Sprintf(`DELETE FROM %s WHERE id = ?`, u.config.Table)
 	case db.TypePostgres:
 		sql = fmt.Sprintf(`DELETE FROM %s WHERE id = $1)`, u.config.Table)
