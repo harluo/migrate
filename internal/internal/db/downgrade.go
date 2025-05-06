@@ -9,6 +9,7 @@ import (
 	"github.com/goexl/exception"
 	"github.com/goexl/gox/field"
 	"github.com/harluo/migrate/internal/internal/config"
+	"github.com/harluo/migrate/internal/internal/core"
 	"github.com/harluo/migrate/internal/internal/db/internal"
 	"github.com/harluo/migrate/internal/internal/model"
 	"github.com/harluo/migrate/internal/kernel"
@@ -42,7 +43,7 @@ func (u *Downgrade) Exec(ctx context.Context, migration kernel.Migration) (err e
 
 func (u *Downgrade) exec(ctx context.Context, migration kernel.Migration) func(*sql.Tx) error {
 	return func(tx *sql.Tx) (err error) {
-		if ue := migration.Downgrade(ctx); nil != ue {
+		if ue := new(core.Typer).Downgrade(ctx, migration); nil != ue {
 			err = ue
 		} else if affected, ie := u.delete(ctx, tx, &model.Migration{Id: migration.Id()}); nil != ie {
 			err = ie

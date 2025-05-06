@@ -62,7 +62,7 @@ func (u *Upgrade) exec(ctx context.Context, migration kernel.Migration, version 
 
 		// 检查执行是否有误，如果出错执行降级操作
 		if nil != err {
-			if de := migration.Downgrade(ctx); nil != de {
+			if de := new(core.Typer).Downgrade(ctx, migration); nil != de {
 				err = de
 			}
 		}

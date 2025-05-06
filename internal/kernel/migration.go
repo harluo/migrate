@@ -11,9 +11,6 @@ type Migration interface {
 	// Upgrade 升级时调用
 	Upgrade(context.Context) error
 
-	// Downgrade 降级时调用
-	Downgrade(context.Context) error
-
 	// Description 升级描述
 	Description() string
 }

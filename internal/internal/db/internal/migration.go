@@ -26,7 +26,7 @@ func newMigration(dt db.Type, db *sql.DB, config *config.Migrate) *Migration {
 }
 
 func (m *Migration) Get(ctx context.Context, migration *model.Migration) (exist bool, err error) {
-	query := fmt.Sprintf(`SELECT "id", "version", "description" FROM %s WHERE id = %d`, m.config.Table, migration.Id)
+	query := fmt.Sprintf(`SELECT id, version, description FROM %s WHERE id = %d`, m.config.Table, migration.Id)
 	if row, qce := m.db.QueryContext(ctx, query); nil != qce {
 		err = qce
 	} else if nil != row && row.Next() {

@@ -1,8 +1,11 @@
 package core
 
 import (
+	"context"
+
 	"github.com/drone/envsubst/path"
 	"github.com/harluo/migrate/internal/internal/checker"
+	"github.com/harluo/migrate/internal/kernel"
 )
 
 type Typer struct {
@@ -19,6 +22,14 @@ func (t *Typer) Check(pattern string) (checked bool) {
 	checked = true
 	if converted, ok := t.data.(checker.Name); ok {
 		checked, _ = path.Match(pattern, converted.Name())
+	}
+
+	return
+}
+
+func (t *Typer) Downgrade(ctx context.Context, migration kernel.Migration) (err error) {
+	if converted, ok := migration.(checker.Downgrader); ok {
+		err = converted.Downgrade(ctx)
 	}
 
 	return

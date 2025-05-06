@@ -58,11 +58,11 @@ func (t *Table) exists() (exists bool, err error) {
 func (t *Table) createSQL() (sql string, err error) {
 	switch t.dt {
 	case db.TypeMySQL:
-		sql = `SELECT COUNT(*) FROM "information_schema"."TABLES" WHERE "TABLE_NAME" = ?`
+		sql = `SELECT COUNT(*) FROM information_schema.TABLES WHERE TABLE_NAME = ?`
 	case db.TypePostgres:
 		sql = `SELECT EXISTS(SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = $1)`
 	case db.TypeSQLite:
-		sql = `SELECT "name" FROM sqlite_master WHERE type='table' AND name = ?`
+		sql = `SELECT name FROM sqlite_master WHERE type='table' AND name = ?`
 	case db.TypeOracle:
 		sql = `SELECT COUNT(*) FROM sys.objects WHERE object_id = OBJECT_ID(?) AND type = 'U'`
 	default:

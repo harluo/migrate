@@ -6,6 +6,7 @@ import (
 	"github.com/goexl/log"
 	"github.com/harluo/migrate/internal/core/internal/command/internal"
 	"github.com/harluo/migrate/internal/core/internal/command/internal/argument"
+	"github.com/harluo/migrate/internal/internal/checker"
 	"github.com/harluo/migrate/internal/internal/core"
 	"github.com/harluo/migrate/internal/internal/db"
 	"github.com/harluo/migrate/internal/kernel"
@@ -76,6 +77,10 @@ func (d *Downgrade) exec(ctx context.Context) (err error) {
 func (d *Downgrade) getMigrations() (migrations []kernel.Migration) {
 	migrations = make([]kernel.Migration, 0, len(d.migrations))
 	for _, migration := range d.migrations {
+		if _, ok := migration.(checker.Downgrader); !ok {
+			continue
+		}
+
 		if 0 != d.id.Value && migration.Id() == d.id.Value {
 			migrations = append(migrations, migration)
 		} else if 0 == d.id.Value && core.NewTyper(migration).Check(d.pattern.Value) {
