@@ -17,11 +17,19 @@ type Migration struct {
 	config *config.Migrate
 }
 
+func newMigration(dt db.Type, db *sql.DB, config *config.Migrate) *Migration {
+	return &Migration{
+		dt:     dt,
+		db:     db,
+		config: config,
+	}
+}
+
 func (m *Migration) Get(ctx context.Context, migration *model.Migration) (exist bool, err error) {
-	query := fmt.Sprintf(`SELECT "id", "version", "description" FROM %s WHERE id = %s`, m.config.Table, migration.Id)
+	query := fmt.Sprintf(`SELECT "id", "version", "description" FROM %s WHERE id = %d`, m.config.Table, migration.Id)
 	if row, qce := m.db.QueryContext(ctx, query); nil != qce {
 		err = qce
-	} else if nil != row {
+	} else if nil != row && row.Next() {
 		exist = true
 		err = row.Scan(&migration.Id, &migration.Version, &migration.Description)
 	}
@@ -39,9 +47,9 @@ func (m *Migration) Tx(callback gox.Callback[sql.Tx]) (err error) {
 	return
 }
 
-func (m *Migration) execTx(ctx context.Context, tx *sql.Tx, callback func(context.Context) error) (err error) {
+func (m *Migration) execTx(tx *sql.Tx, callback gox.Callback[sql.Tx]) (err error) {
 	defer func() {
-		if exception := recover(); nil != exception {
+		if recovered := recover(); nil != recovered {
 			err = tx.Rollback()
 		}
 	}()

@@ -8,20 +8,21 @@ import (
 )
 
 type Initializer struct {
-	up    *command.Upgrade
-	table *db.Table
+	upgrade *command.Upgrade
+	table   *db.Table
 }
 
-func newInitializer(up *command.Upgrade) *Initializer {
+func newInitializer(upgrade *command.Upgrade, table *db.Table) *Initializer {
 	return &Initializer{
-		up: up,
+		upgrade: upgrade,
+		table:   table,
 	}
 }
 
 func (i *Initializer) Initialize(ctx context.Context) (err error) {
 	if ce := i.table.Create(ctx); nil != ce {
 		err = ce
-	} else if re := i.up.Run(ctx); nil != re {
+	} else if re := i.upgrade.Run(ctx); nil != re {
 		err = re
 	}
 

@@ -32,14 +32,14 @@ func (t *Table) Create(ctx context.Context) (err error) {
 		err = ee
 	} else if !exists {
 		_, err = t.db.ExecContext(ctx, fmt.Sprintf(`CREATE TABLE %s (
-	id %s PRIMARY KEY,
+	id %s PRIMARY KEY COMMENT '标识',
 
-	version %s NOT NULL DEFAULT 1,
-	description %s NOT NULL,
+	version %s NOT NULL DEFAULT 1 COMMENT '版本号',
+	description %s NOT NULL DEFAULT '' COMMENT '本次数据迁移描述信息',
 
-	created %s DEFAULT CURRENT_TIMESTAMP,
-	updated %s DEFAULT CURRENT_TIMESTAMP
-)`, t.config.Table, bigint, smallint, varchar, datetime))
+	created %s NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '本次数据迁移创建时间',
+	updated %s NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '本次数据迁移修改时间'
+) COMMENT '数据迁移记录'`, t.config.Table, bigint, smallint, varchar, datetime, datetime))
 	}
 
 	return
@@ -60,11 +60,11 @@ func (t *Table) createSQL() (sql string, err error) {
 	case db.TypeMySQL:
 		sql = `SELECT COUNT(*) FROM "information_schema"."TABLES" WHERE "TABLE_NAME" = ?`
 	case db.TypePostgres:
-		sql = `SELECT EXISTS(SELECT FROM "pg_tables" WHERE "schemaname" = 'public' AND "tablename" = $1)`
+		sql = `SELECT EXISTS(SELECT FROM pg_tables WHERE schemaname = 'public' AND tablename = $1)`
 	case db.TypeSQLite:
-		sql = `SELECT "name" FROM "sqlite_master" WHERE "type"='table' AND "name" = ?`
+		sql = `SELECT "name" FROM sqlite_master WHERE type='table' AND name = ?`
 	case db.TypeOracle:
-		sql = `SELECT COUNT(*) FROM "sys"."objects" WHERE "object_id" = "OBJECT_ID"(?) AND "type" = 'U'`
+		sql = `SELECT COUNT(*) FROM sys.objects WHERE object_id = OBJECT_ID(?) AND type = 'U'`
 	default:
 		err = exception.New().Message("不被支持的数据库类型").Field(field.New("type", t.dt)).Build()
 	}

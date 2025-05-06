@@ -17,10 +17,10 @@ import (
 type Downgrade struct {
 	dt        db.Type
 	config    *config.Migrate
-	migration internal.Migration
+	migration *internal.Migration
 }
 
-func newDowngrade(dt db.Type, config *config.Migrate, migration internal.Migration) *Downgrade {
+func newDowngrade(dt db.Type, config *config.Migrate, migration *internal.Migration) *Downgrade {
 	return &Downgrade{
 		dt:        dt,
 		config:    config,

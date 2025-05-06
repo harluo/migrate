@@ -13,6 +13,8 @@ type Migration struct {
 
 	// 创建时间
 	Created time.Time `json:"created,omitempty"`
+	// 更新时间
+	Updated time.Time `json:"updated,omitempty"`
 }
 
 func (*Migration) TableComment() string {
