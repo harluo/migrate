@@ -22,7 +22,3 @@ func (*Pattern) Aliases() []string {
 func (p *Pattern) Target() any {
 	return &p.Value
 }
-
-func (*Pattern) Default() any {
-	return "*"
-}

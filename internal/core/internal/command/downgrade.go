@@ -3,6 +3,8 @@ package command
 import (
 	"context"
 
+	"github.com/goexl/exception"
+	"github.com/goexl/gox/field"
 	"github.com/goexl/log"
 	"github.com/harluo/migrate/internal/core/internal/command/internal"
 	"github.com/harluo/migrate/internal/core/internal/command/internal/argument"
@@ -64,27 +66,41 @@ func (d *Downgrade) Description() string {
 }
 
 func (d *Downgrade) exec(ctx context.Context) (err error) {
-	for _, migration := range d.getMigrations() {
-		err = d.downgrade.Exec(ctx, migration)
-		if nil != err {
-			break
+	if migrations, gme := d.getMigrations(); nil != gme {
+		err = gme
+	} else {
+		for _, migration := range migrations {
+			err = d.downgrade.Exec(ctx, migration)
+			if nil != err {
+				break
+			}
 		}
 	}
 
 	return
 }
 
-func (d *Downgrade) getMigrations() (migrations []kernel.Migration) {
-	migrations = make([]kernel.Migration, 0, len(d.migrations))
+func (d *Downgrade) getMigrations() (migrations map[uint64]kernel.Migration, err error) {
+	migrations = make(map[uint64]kernel.Migration, len(d.migrations))
 	for _, migration := range d.migrations {
 		if _, ok := migration.(checker.Downgrader); !ok {
 			continue
 		}
 
+		if cached, exists := migrations[migration.Id()]; exists {
+			duplicates := []kernel.Migration{cached, migration}
+			err = exception.New().Message("存在重复的数据迁移脚本").Field(field.New("migrations", duplicates)).Build()
+		}
+		if nil != err {
+			return
+		}
+
 		if 0 != d.id.Value && migration.Id() == d.id.Value {
-			migrations = append(migrations, migration)
-		} else if 0 == d.id.Value && core.NewTyper(migration).Check(d.pattern.Value) {
-			migrations = append(migrations, migration)
+			migrations[migration.Id()] = migration
+		} else if 0 == d.id.Value && "" != d.pattern.Value && core.NewTyper(migration).Check(d.pattern.Value) {
+			migrations[migration.Id()] = migration
+		} else {
+			migrations[migration.Id()] = migration
 		}
 	}
 
