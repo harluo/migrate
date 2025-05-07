@@ -15,6 +15,8 @@ import (
 )
 
 type Upgrade struct {
+	internal.Base
+
 	table      *db.Table
 	upgrade    *db.Upgrade
 	migrations []kernel.Migration
@@ -91,7 +93,7 @@ func (u *Upgrade) getMigrations() (migrations map[uint64]kernel.Migration, err e
 	migrations = make(map[uint64]kernel.Migration, len(u.migrations))
 	for _, migration := range u.migrations {
 		if cached, exists := migrations[migration.Id()]; exists {
-			duplicates := []kernel.Migration{cached, migration}
+			duplicates := u.Migrations(cached, migration)
 			err = exception.New().Message("存在重复的数据迁移脚本").Field(field.New("migrations", duplicates)).Build()
 		}
 		if nil != err {

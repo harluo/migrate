@@ -15,6 +15,8 @@ import (
 )
 
 type Downgrade struct {
+	internal.Base
+
 	table      *db.Table
 	downgrade  *db.Downgrade
 	migrations []kernel.Migration
@@ -88,7 +90,7 @@ func (d *Downgrade) getMigrations() (migrations map[uint64]kernel.Migration, err
 		}
 
 		if cached, exists := migrations[migration.Id()]; exists {
-			duplicates := []kernel.Migration{cached, migration}
+			duplicates := d.Migrations(cached, migration)
 			err = exception.New().Message("存在重复的数据迁移脚本").Field(field.New("migrations", duplicates)).Build()
 		}
 		if nil != err {
