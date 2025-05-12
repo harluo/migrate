@@ -4,7 +4,7 @@ go 1.24
 
 require (
 	github.com/drone/envsubst v1.0.3
-	github.com/goexl/db v0.0.6
+	github.com/goexl/db v0.0.7
 	github.com/goexl/exception v0.0.3
 	github.com/goexl/gox v1.9.2
 	github.com/goexl/log v0.0.9
