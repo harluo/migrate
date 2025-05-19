@@ -8,7 +8,7 @@ require (
 	github.com/goexl/exception v0.0.4
 	github.com/goexl/gox v1.9.2
 	github.com/goexl/log v0.1.0
-	github.com/harluo/boot v1.7.3
+	github.com/harluo/boot v1.7.4
 	github.com/harluo/config v0.0.7
 	github.com/harluo/di v0.0.5
 )
@@ -26,7 +26,7 @@ require (
 	github.com/goexl/gfx v0.2.8 // indirect
 	github.com/goexl/mengpo v0.3.1 // indirect
 	github.com/goexl/structer v0.1.9 // indirect
-	github.com/goexl/xiren v0.0.8 // indirect
+	github.com/goexl/xiren v0.0.9 // indirect
 	github.com/google/uuid v1.6.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
 	github.com/mattn/go-colorable v0.1.14 // indirect
