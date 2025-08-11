@@ -9,7 +9,7 @@ require (
 	github.com/goexl/gox v1.9.2
 	github.com/goexl/log v0.1.0
 	github.com/harluo/boot v1.7.4
-	github.com/harluo/config v0.0.7
+	github.com/harluo/config v0.0.8
 	github.com/harluo/di v0.0.5
 )
 
