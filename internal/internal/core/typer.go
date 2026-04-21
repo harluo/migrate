@@ -35,6 +35,14 @@ func (t *Typer) Downgrade(ctx context.Context, migration kernel.Migration) (err 
 	return
 }
 
+func (t *Typer) Runnable() (runnable bool) {
+	if converted, ok := t.data.(checker.Runnable); ok {
+		runnable = converted.Runnable()
+	}
+
+	return
+}
+
 func (t *Typer) Version() (version uint16) {
 	switch converted := t.data.(type) {
 	case checker.Version[int]:

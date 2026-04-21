@@ -36,7 +36,7 @@ func (u *Upgrade) Exec(ctx context.Context, migration kernel.Migration) (err err
 	version := core.NewTyper(migration).Version()
 	if exists, ge := u.migration.Get(ctx, entity); nil != ge {
 		err = ge
-	} else if !exists || version > entity.Version {
+	} else if !exists || version > entity.Version || core.NewTyper(migration).Runnable() {
 		err = u.migration.Tx(u.exec(ctx, migration, version, exists))
 	}
 
